@@ -1,0 +1,36 @@
+ # Simple Blog App with Local Storage( Task 3)
+ <!DOCTYPE html>
+<html>
+<body>
+<h1>Simple Blog App</h1>
+<input type="text" id="post" placeholder="Write a post">
+<button onclick="addPost()">Add</button>
+<ul id="list"></ul>
+<script>
+function addPost() {
+    let post = document.getElementById("post").value;
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+    posts.push(post);
+    localStorage.setItem("posts", JSON.stringify(posts));
+    displayPosts();
+}
+function displayPosts() {
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+    let output = "";
+    for(let i = 0; i < posts.length; i++) {
+        output += `<li>${posts[i]}
+        <button onclick="deletePost(${i})">Delete</button>
+        </li>`;
+    }
+    document.getElementById("list").innerHTML = output;
+}
+function deletePost(i) {
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+    posts.splice(i, 1);
+    localStorage.setItem("posts", JSON.stringify(posts));
+    displayPosts();
+}
+displayPosts();
+</script>
+</body>
+</html>
